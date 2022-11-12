@@ -11,7 +11,7 @@ plugins {
 	`maven-publish`
 }
 tasks.named<BootJar>("bootJar") {
-	mainClass.set("com.xinjiangshao.apigateway.ApiGatewayApplication")
+	mainClass.set("com.xinjiangshao.apigateway.ApiGatewayApplicationKt")
 }
 
 group = "com.xinjiangshao"
