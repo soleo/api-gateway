@@ -80,8 +80,8 @@ publishing {
 		  name = "GitHubPackages"
 		  url = uri("https://maven.pkg.github.com/soleo/api-gateway")
 		  credentials {
-			username = findProperty("GITHUB_ACTOR") ?: System.getenv("GITHUB_ACTOR")
-			password = findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN")
+			  username = project.findProperty("GITHUB_ACTOR") as String? ?: System.getenv("GITHUB_ACTOR")
+			  password = project.findProperty("GITHUB_TOKEN") as String? ?: System.getenv("GITHUB_TOKEN")
 		  }
 		}
 	}
