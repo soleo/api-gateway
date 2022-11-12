@@ -14,23 +14,8 @@ tasks.named<BootJar>("bootJar") {
 	mainClass.set("com.xinjiangshao.apigateway.ApiGatewayApplication")
 }
 
-tasks.named<BootBuildImage>("bootBuildImage") {
-	docker {
-		builderRegistry {
-			token = (project.properties["GITHUB_TOKEN"] ?: System.getenv("GITHUB_TOKEN")).toString()
-		}
-	}
-}
-
-
-tasks.register("bootBuildImageDocker") {
-	doFirst {
-		println("token=${tasks.getByName<BootBuildImage>("bootBuildImage").docker.builderRegistry.token}")
-	}
-}
-
 group = "com.xinjiangshao"
-version = "0.0.7"
+version = File("VERSION").readText(Charsets.UTF_8)
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -67,9 +52,6 @@ tasks.withType<Test> {
 
 publishing {
 	publications {
-		create<MavenPublication>("bootJava") {
-			artifact(tasks.named("bootJar"))
-		}
 		register<MavenPublication>("gpr") {
 			from(components["java"])
 			artifact(tasks.named("bootJar"))
