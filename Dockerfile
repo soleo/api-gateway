@@ -16,11 +16,14 @@ LABEL org.opencontainers.image.licenses=MIT
 RUN mkdir /opt/app
 RUN mkdir /etc/app
 
+COPY --from=builder /opt/app/build/resources/main/ /etc/app/
 VOLUME /etc/app
 
 WORKDIR /opt/app
 
 EXPOSE 8080
+EXPOSE 8930
+
 COPY --from=builder /opt/app/build/libs/ /opt/app/
 
 ENTRYPOINT ["java", "-jar", "/opt/app/api-gateway.jar"]
