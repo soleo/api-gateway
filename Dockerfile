@@ -26,4 +26,4 @@ EXPOSE 8930
 
 COPY --from=builder /opt/app/build/libs/ /opt/app/
 
-ENTRYPOINT ["java", "-jar", "/opt/app/api-gateway.jar"]
+ENTRYPOINT ["java", "-jar", "/opt/app/api-gateway-0.0.8.jar", "--spring.config.location=file:/etc/app/application.yml"]
