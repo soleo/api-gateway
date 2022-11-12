@@ -17,7 +17,7 @@ tasks.named<BootJar>("bootJar") {
 tasks.named<BootBuildImage>("bootBuildImage") {
 	docker {
 		builderRegistry {
-			token = System.getenv("PACKAGE_PUBLISH_TOKEN")
+			token = (project.properties["GITHUB_TOKEN"] ?: System.getenv("GITHUB_TOKEN")).toString()
 		}
 	}
 }
@@ -30,7 +30,7 @@ tasks.register("bootBuildImageDocker") {
 }
 
 group = "com.xinjiangshao"
-version = "0.0.4"
+version = "0.0.5"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -68,7 +68,6 @@ tasks.withType<Test> {
 publishing {
 	publications {
 		create<MavenPublication>("bootJava") {
-
 			artifact(tasks.named("bootJar"))
 		}
 		register<MavenPublication>("gpr") {
@@ -81,8 +80,8 @@ publishing {
 		  name = "GitHubPackages"
 		  url = uri("https://maven.pkg.github.com/soleo/api-gateway")
 		  credentials {
-			username = System.getenv("GITHUB_ACTOR")
-			password = System.getenv("PACKAGE_PUBLISH_TOKEN")
+			username = (findProperty("GITHUB_ACTOR") ?: System.getenv("GITHUB_TOKEN")).toString()
+			password = (findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN")).toString()
 		  }
 		}
 	}
@@ -90,7 +89,7 @@ publishing {
 
 tasks.register("publishingConfiguration") {
 	doLast {
-		println(publishing.publications["bootJava"])
-		println(publishing.repositories.getByName<MavenArtifactRepository>("maven").url)
+		println(publishing.publications["gpr"])
+		println(publishing.repositories.getByName<MavenArtifactRepository>("GitHubPackages").url)
 	}
 }
