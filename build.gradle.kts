@@ -30,7 +30,7 @@ tasks.register("bootBuildImageDocker") {
 }
 
 group = "com.xinjiangshao"
-version = "0.0.5"
+version = "0.0.6"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -80,8 +80,8 @@ publishing {
 		  name = "GitHubPackages"
 		  url = uri("https://maven.pkg.github.com/soleo/api-gateway")
 		  credentials {
-			username = (findProperty("GITHUB_ACTOR") ?: System.getenv("GITHUB_TOKEN")).toString()
-			password = (findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN")).toString()
+			username = findProperty("GITHUB_ACTOR") ?: System.getenv("GITHUB_ACTOR")
+			password = findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN")
 		  }
 		}
 	}
