@@ -30,7 +30,7 @@ tasks.register("bootBuildImageDocker") {
 }
 
 group = "com.xinjiangshao"
-version = "0.0.3"
+version = "0.0.4"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -68,7 +68,11 @@ tasks.withType<Test> {
 publishing {
 	publications {
 		create<MavenPublication>("bootJava") {
-			
+
+			artifact(tasks.named("bootJar"))
+		}
+		register<MavenPublication>("gpr") {
+			from(components["java"])
 			artifact(tasks.named("bootJar"))
 		}
 	}
