@@ -17,7 +17,7 @@ tasks.named<BootJar>("bootJar") {
 tasks.named<BootBuildImage>("bootBuildImage") {
 	docker {
 		builderRegistry {
-			token = System.getenv("GITHUB_TOKEN")
+			token = System.getenv("PACKAGE_PUBLISH_TOKEN")
 		}
 	}
 }
@@ -68,6 +68,7 @@ tasks.withType<Test> {
 publishing {
 	publications {
 		create<MavenPublication>("bootJava") {
+			
 			artifact(tasks.named("bootJar"))
 		}
 	}
@@ -77,7 +78,7 @@ publishing {
 		  url = uri("https://maven.pkg.github.com/soleo/api-gateway")
 		  credentials {
 			username = System.getenv("GITHUB_ACTOR")
-			password = System.getenv("GITHUB_TOKEN")
+			password = System.getenv("PACKAGE_PUBLISH_TOKEN")
 		  }
 		}
 	}
